@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+int board[11][11];
+bool isPossible(int size,int row, int col)
+{
+    for(int i=row-1;i>=0;i--)
+    {
+        if(board[i][col]==1)
+        {
+            return false;
+        }
+    }
+    for(int i=row-1,j=col-1;i>=0&&j>=0;i--,j--)
+    {
+        if(board[i][j]==1)
+        {
+            return false;
+        }
+    }
+    for(int i=row-1,j=col+1;i>=0&&j<size;i--,j++)
+    {
+        if(board[i][j]==1)
+        {
+            return false;
+        }
+    }
+    return true;
+
+}
+void nqueenhelper(int size, int row)
+{
+    if(row==size)
+    {
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                cout<<board[i][j]<<" ";
+            }
+        }
+        cout<<endl;
+        return;
+    }
+    for(int j=0;j<size;j++)
+    {
+        if(isPossible(size,row,j))
+        {
+            board[row][j]=1;
+            nqueenhelper(size,row+1);
+            board[row][j]=0;
+        }
+    }
+    return;
+
+}
+void nqueen(int size)
+{
+   
+    memset(board,0,11*11*sizeof(int));
+    nqueenhelper(size,0);
+    return;
+
+}
+int main(){
+    
+    // write your code here
+    int n;
+    cin>>n;
+    nqueen(n);
+    return 0;
+}
